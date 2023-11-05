@@ -29,21 +29,23 @@ bool correct_word(char word[], int start, int end)
    // Task 3: Recursive case with concatenation characters '|' at suffix position.
    if (word[end] == '|') {
       for(int i = start; i < end-1; i++) {
-         if(correct_word(word, start, start+i) &&correct_word(word, start+i+1, end-1))
-            {return 1;}
+         if(correct_word(word, start, i) && correct_word(word, i+1, end-1)){
+            return 1;
+         }
       }
    }
 
    // Task 4: Recursive case with concatenation characters '#' at prefix position.
    if (word[start] == '#') {
       for(int i = start+1; i < end; i++){
-         if(correct_word(word, start ,end) &&correct_word(word, start+1,end))
+         if(correct_word(word, start+1 ,i) &&correct_word(word, i+1,end)){
             return 1;
+         }
       }
    }
 
    // All remaining cases are wrong
-   return false;
+   return 0;
 }
 
 
@@ -56,12 +58,11 @@ int main()
       cout << "Enter a word: ";
       cin >> word;
       if (correct_word(word, 0, strlen(word) - 1))
-         cout << "The word is CORRECT!\n" << word;
+         cout << "The word is CORRECT!\n";
       else
          cout << "The word is INCORRECT!\n";
-      cout << word;
       cout << "Do you want to enter a new word ('Y'/'y' for Yes, 'N'/'n' for No)? ";
-      cin >> c; 
+      cin >> c;
    } while (c == 'Y' || c=='y');
 
    return 0;
